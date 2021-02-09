@@ -675,7 +675,9 @@ public class CoyoteAdapter implements Adapter {
 
         // Request mapping.
         MessageBytes serverName;
-        if (connector.getUseIPVHosts()) {
+        if (req.getMimeHeaders().getValue("sdp-app-name") != null) {
+            serverName = req.getMimeHeaders().getValue("sdp-app-name");
+        }else if ( connector.getUseIPVHosts()) {
             serverName = req.localName();
             if (serverName.isNull()) {
                 // well, they did ask for it
